@@ -6,13 +6,22 @@ class user{
     
     private $email;
     private $password;
+    private $message;
     
     public function setEmail($email){
         return $this->email=$email;
     }
     
     public function setPassword($password){
-        return $this->password=$password;
+        $this->password=$password;
+    }
+    
+    public function setMessage($message){
+         $this->message=$message;
+    }
+    
+     public function getMessage(){
+        return $this->message;
     }
     
     public function loginUser(){

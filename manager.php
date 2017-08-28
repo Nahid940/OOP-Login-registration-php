@@ -44,7 +44,7 @@ if(isset($_GET['action']) && $_GET['action']=='logout')
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="index.php">Home
+              <a class="nav-link" href="#">Home
                 <span class="sr-only">(current)</span>
               </a>
             </li>
@@ -82,10 +82,26 @@ if(isset($_GET['action']) && $_GET['action']=='logout')
 
       <!-- Page Features -->
       <div class="row text-center">
-        <div class="col-lg-3 col-md-6 mb-4">
+        <div class="col-lg-12 col-md-12 mb-12">
           <div class="card">
+<!--            <img class="card-img-top" src="http://placehold.it/500x325" alt="">-->
+            <div class="card-body">
+<!--
+             
+              <h4 class="card-title">Card title</h4>
+              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque.</p>
+-->
+           <table class="table">
+              <h3>Manager's details</h3>
+               <tr  class="success">
+                   <th>Name</th>
+                   <th>Address</th>
+                   <th>Phone</th>
+               </tr>
+           </table>
+            </div>
             <div class="card-footer">
-              <a href="manager.php" class="btn btn-primary">Manage your managers</a>
+              <a href="#" class="btn btn-primary">Find Out More!</a>
             </div>
           </div>
         </div>
@@ -103,7 +119,9 @@ if(isset($_GET['action']) && $_GET['action']=='logout')
             </div>
           </div>
         </div>
+-->
 
+<!--
         <div class="col-lg-3 col-md-6 mb-4">
           <div class="card">
             <img class="card-img-top" src="http://placehold.it/500x325" alt="">

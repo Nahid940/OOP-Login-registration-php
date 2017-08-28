@@ -1,6 +1,7 @@
 <?php
 include ('user.php');
 include_once ('Session.php');
+Session::checkLoggedin();
 $user=new user();
 if(isset($_POST['login'])){
     $email=$_POST['email'];
@@ -12,10 +13,9 @@ if(isset($_POST['login'])){
     if($user->loginUser()){
         Session::init();
         header('Location:index.php');
-        
-        //echo "Done";
-    }else{
-        echo 'not';
+
+    }else{ 
+        header('Location:login.php');
     }
     
 }

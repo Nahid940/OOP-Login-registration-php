@@ -40,5 +40,11 @@ class Session{
             header('Location:login.php');
         }
     }
+    
+    public static function checkLoggedin(){
+        if(self::get('login')==true){
+            header('Location:index.php');
+        }
+    }
 }
 ?>
