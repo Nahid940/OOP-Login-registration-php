@@ -16,14 +16,7 @@ class user{
         $this->password=$password;
     }
     
-    public function setMessage($message){
-         $this->message=$message;
-    }
-    
-     public function getMessage(){
-        return $this->message;
-    }
-    
+   
     public function loginUser(){
         $sql="select * from userlogin where email=:email and password=:password";
         $stmt=DB::myQuery($sql);
@@ -43,7 +36,18 @@ class user{
         return $result;
     }
     
+        public function checkUser(){
+        $sql="select * from userlogin where email=:email and password=:password";
+        $stmt=DB::myQuery($sql);
+        $stmt->bindValue(':email',$this->email);
+        $stmt->bindValue(':password',$this->password);
+        $stmt->execute();
+        if($stmt->rowcount()==0){
+            $msg="<div class='alert colorOrange'><center>Invalid information !!</center></div>";
+      
+        return $msg;
+    }
     
-    
+    }
 }
 ?>

@@ -74,6 +74,7 @@ if(isset($_GET['action']) && $_GET['action']=='logout')
         <h1 class="display-3">A Warm Welcome! <?php  echo $name;?>
         </h1>
       
+      
 <!--
         <p class="lead"></p>
         <a href="#" class="btn btn-primary btn-lg">Call to action!</a>
