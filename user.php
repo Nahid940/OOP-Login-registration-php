@@ -44,7 +44,6 @@ class user{
         $stmt->execute();
         if($stmt->rowcount()==0){
             $msg="<div class='alert colorOrange'><center>Invalid information !!</center></div>";
-      
         return $msg;
     }
     
