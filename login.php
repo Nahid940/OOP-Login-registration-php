@@ -28,6 +28,7 @@ if(isset($_POST['login'])){
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="css/style.css" type="text/css"/>
+<!--    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">-->
     <style>
          
     </style>
@@ -53,10 +54,10 @@ if(isset($_POST['login'])){
            <div class="panel-heading">
                <div class="row">
                    <div class="col-xs-6">
-                       <a href="" class="active" id="login-form-link">Sign in</a>
+                       <a href="#loginform" class="active" id="login-form-link">Sign in</a>
                    </div>
                     <div class="col-xs-6">
-                       <a href="#register-form" class="active" id="register-form-link">Sign up</a>
+                       <a href="#registerform" class="active" id="register-form-link">Sign up</a>
                    </div>
                </div>
                <hr/>
@@ -71,7 +72,7 @@ if(isset($_POST['login'])){
                               $val= $user->checkUser();
                             }
                         ?> 
-                        <form class="form-signin" method="post"  id="login-form">       
+                        <form class="form-signin" method="post"  id="loginform">       
 <!--                          <h2 class="form-signin-heading">Sign in</h2>-->
                                   <?php 
 
@@ -92,9 +93,10 @@ if(isset($_POST['login'])){
 
                         </form>
                         
-                        
+                   
                          
-                        <form id="register-form" action="" method="post" role="form" style="display: none;" class="register-form">
+                        <form id="registerform" action="" method="post" role="form" style="display: none;" class="register-form">
+                     
                             <div class="form-group">
                             <span id="nameValid" style="color:red;font-weight:bold"></span>
                             <label for="name" id="label1">Enter your name:</label>
@@ -114,21 +116,26 @@ if(isset($_POST['login'])){
                             </div>
                             
                             
-                            <div class="form-group">
+                            <div class="form-group" >
+                              <div id="selectRadio">
                                <table>
-                                   <tr>
+<!--                                  <span  class="label label-danger"></span>-->
+                                  
+                                   <tr >
                                        <td><label for="optradio" id="label4">Select your gender : </label></td>
                                        <td> <label class="radio-inline">
-                                    <input type="radio" name="optradio" value="male"> Male
+                                    <input type="radio" name="optradio" id="optradio" value="male"> Male
                                 </label>
                                   </td>
                                   <td>
                                 <label class="radio-inline">
-                                     <input type="radio" name="optradio" value="female">Female
+                                     <input type="radio" name="optradio" id="optradio" value="female">Female
                                 </label> 
                                   </td>
                                    </tr>
+                                   
                                </table>
+                               </div>
                             </div>
                             <div class="form-group">
                                 <label for="" id="label5">Your Date of Birth:</label>
@@ -188,8 +195,8 @@ if(isset($_POST['login'])){
                               <div class="form-group">
                                    <table>
                                        <tr>
-                                           <td> <label for="mobile" id="label6">Choose your profile pic:</label></td>
-                                           <td> <input type="file" class="form-control" id="image"  name="image"></td>
+                                           
+                                           <td><label for="image" id="label6">Your image:</label> <input type="file" class="form-control" id="image"  name="image"></td>
                                        </tr>
                                    </table>
                                 </div>
@@ -197,12 +204,20 @@ if(isset($_POST['login'])){
                             
                             <div class="form-group">
                               
-                               <label for="password" id="label7">Enter password</label>
-                               <span id="confirmpassword"></span>
+                               <label for="password1" id="label7">Enter password</label>
+                               
+                               <span class="label label-danger" id="wrongpassword"></span>
+                               
                                 <input type="password" name="password1" id="password1"  class="form-control" placeholder="Password">
                             </div>
+                            
+                            
+                            
                             <div class="form-group">
-                               <label for="confirm-password" id="label8">Confirm password</label>
+                               <label for="confirmpassword" id="label8">Confirm password</label>
+                               
+                               <span id="confirmpasswordWarning"></span>
+                               
                                 <input type="password" name="confirmpassword" id="confirmpassword" tabindex="2" class="form-control" placeholder="Confirm Password">
                             </div>
                             <div class="form-group">
@@ -215,6 +230,8 @@ if(isset($_POST['login'])){
 <!--                                    <button type="reset"  class="form-control btn btn-register" name="Reset">Reset</button>-->
                                 </div>
                             </div>
+                            <span id="result"></span>
+<!--                     <div id="dialog-message" title="Registration complete">Done</div>-->
 				        </form>
                    </div>
                </div>
@@ -224,27 +241,32 @@ if(isset($_POST['login'])){
    </div>
 </div>
 </div>
+ 
+ 
   
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script>
       $(document).ready(function() {
+          
+        var mailformat = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
         $('#login-form').on('click','.button',function(e){
             var email = $('#email').val();
-            var mailformat = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+            //var mailformat = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 			var password = $('#password').val();
              
              if(email=='' || (!mailformat.test(email))){
                 document.getElementById("emailcheck").innerHTML="<div class='alert danger'><center>Fill up each field properly!!</center></div>"; 
-                $('#email').css('box-shadow','0 0 10px #ff1111');
-                $('#email').css('border-color','red');
+                $('#email').css('box-shadow','0 0 10px ##ff0000');
+                $('#email').css('border-color','#ff0000');
                  e.preventDefault();
             }
             if(password==''){
                  document.getElementById("emailcheck").innerHTML="<div class='alert danger'><center>Fill up each field properly!!</center></div>"; 
                 $('#emailcheck').delay(100).fadeIn(100);
                 $('#emailcheck').fadeOut(2000);
-                $('#password').css('box-shadow','0 0 10px #ff1111');
-                $('#password').css('border-color','red');
+                $('#password').css('box-shadow','0 0 10px ##ff0000');
+                $('#password').css('border-color','#ff0000');
                 e.preventDefault();
             }
              
@@ -258,20 +280,20 @@ if(isset($_POST['login'])){
                 $('#email').css('box-shadow','0 0 10px green');
                  $this.css({"color":"green","border":"1px solid green"});
               }else{
-                  $('#email').css('box-shadow','0 0 10px red');
-                 $this.css({"color":"green","border":"1px solid red"});
+                  $('#email').css('box-shadow','0 0 10px #ff0000');
+                 $this.css({"color":"green","border":"1px solid #ff0000"});
               }
            });
           
             $('#password').keyup(function(){
               var $this = $(this);
               var insertedVal = $this.val();
-              if (insertedVal !=''){
+              if (insertedVal !='' ){
                 $('#password').css('box-shadow','0 0 10px green');
                  $this.css({"color":"green","border":"1px solid green"});
               }else{
-                  $('#password').css('box-shadow','0 0 10px red');
-                 $this.css({"color":"green","border":"1px solid red"});
+                  $('#password').css('box-shadow','0 0 10px #ff0000');
+                 $this.css({"color":"green","border":"1px solid #ff0000"});
               }
            });
           
@@ -279,17 +301,79 @@ if(isset($_POST['login'])){
           
           //Check input value for registration form//
           //----------------------------------------------------------------------------------------------------------------------//
-             $('input[type=text],input[type=email],input[type=password]').keyup(function(){
+             $('input[type=text],#confirmpassword').keyup(function(){
               var $this = $(this);
               var insertedVal = $this.val();
               if (insertedVal !=''){
                 $this.css('box-shadow','0 0 10px green');
                 $this.css({"color":"green","border":"1px solid green"});
               }else{
-                $this.css('box-shadow','0 0 10px red');
-                $this.css({"color":"green","border":"1px solid red"})
+                $this.css('box-shadow','0 0 10px #ff0000');
+                $this.css({"color":"red","border":"1px solid #ff0000"})
               }
            });
+          
+          $('#email1').keyup(function(){
+              var $this = $(this);
+              var insertedVal = $this.val();
+              if (insertedVal !='' && (mailformat.test(insertedVal))){
+                $this.css('box-shadow','0 0 10px green');
+                $this.css({"color":"green","border":"1px solid green"});
+              }else{
+                $this.css('box-shadow','0 0 10px #ff0000');
+                $this.css({"color":"red","border":"1px solid #ff0000"})
+              }
+           });
+          
+          
+          
+          //check password length and if it is empty//------------------------------------------------------------------//
+          $('#password1').keyup(function(){
+              var $this = $(this);
+              var insertedVal = $this.val();
+              if (insertedVal !='' && insertedVal.length>=10){
+                $this.css('box-shadow','0 0 10px green');
+                $this.css({"color":"green","border":"1px solid green"});
+                $('#wrongpassword').hide();
+              }else{
+                $('#wrongpassword').show();
+                $('#wrongpassword').text('Password must be 10 characters long !!');
+                $this.css('box-shadow','0 0 10px #ff0000');
+                $this.css({"color":"#ff0000","border":"1px solid #ff0000"})
+              }
+           });
+          
+          $('#confirmpassword').keyup(function(){
+              var p1 = $('#password1').val();
+              var p2 = $('#confirmpassword').val();
+        
+              if(p2==p1 && p2!=''){
+                $('#confirmpasswordWarning').html("<i class='fa fa-check' aria-hidden='true'></i>Password  matches !");
+                $('#confirmpasswordWarning').css("color","green");
+                $('#confirmpassword').css({"color":"green","box-shadow":'0 0 10px green'});
+                $('#password1').css('box-shadow','0 0 10px green');
+              }
+              else{
+                $('#confirmpasswordWarning').html(" <i class='fa fa-times' aria-hidden='true'></i>Password doesn't match !");
+                $('#confirmpasswordWarning').css({"color": "#ff0000"});
+                $('#confirmpassword').css({"color": "#ff0000","border-color":"#ff0000","box-shadow":"0 0 10px #ff0000"});
+              }
+           });
+          
+          
+          //Check if all the select options are selected//------------------------------------------------------//
+          $("select").on('blur',function(){ 
+              if ($('option:selected', this).val() == 0){
+                $(this).css('border-color', 'ff0000');
+                $(this).css('box-shadow', '0 0 10px #ff0000');
+              }
+              else if ($(this).val() > 0){
+                $(this).css('border-color', 'green');   
+                $(this).css('box-shadow', '0 0 10px green');  
+              }
+        });
+          
+          
           
           //Check if any filed is empty
             $('#registersubmit').click(function(){   
@@ -298,6 +382,7 @@ if(isset($_POST['login'])){
             var address = $('#address').val();
             var mobile = $('#mobile').val();
             var optradio = $('#optradio').val();
+            var genValue=false;
 
             var day = $('#day').val();
             var month = $('#month').val();
@@ -306,40 +391,146 @@ if(isset($_POST['login'])){
             var password = $('#password1').val();
             var confirmpassword = $('#confirmpassword').val();        
                 
-            if(name=='')
-                $('#name1').css('box-shadow','0 0 10px red');
-//                $('#label1').css('color','red');
-            if(email=='')
-                $('#email1').css('box-shadow','0 0 10px red');
-//                $('#label2').css('color','red');
-            if(address=='')
-                $('#address').css('box-shadow','0 0 10px red');
-//                $('#label3').css('color','red');
-            if(mobile=='')
-                $('#mobile').css('box-shadow','0 0 10px red');
-//                $('#label4').css('color','red');
-            if(day=='')
-                $('#day').css('box-shadow','0 0 10px red');
-             if(month=='')
-                $('#month').css('box-shadow','0 0 10px red');
-            if(year=='')
-                $('#year').css('box-shadow','0 0 10px red');
-            if(image=='')
-                $('#image').css('box-shadow','0 0 10px red');
-//                $('#label6').css('color','red');
-            if(password=='')
-                $('#password1').css('box-shadow','0 0 10px red');
-//                $('#label7').css('color','red');
-            if(confirmpassword=='')
-                $('#confirmpassword').css('box-shadow','0 0 10px red');
-//                $('#label8').css('color','red');
-                
-            if(password!=confirmpassword){
-                $('#confirmpassword').text("Password doesn't match");
-                $('#confirmpassword').css("color","red");
-                $('#password1').css('box-shadow','0 0 10px red');
-                $('#confirmpassword').css('box-shadow','0 0 10px red');
+            if(name==''){
+                $('#name1').css('border-color','#ff0000');
             }
+
+            if(email=='' || (!mailformat.test(email))){
+                $('#email1').css('border-color','#ff0000');
+            }
+
+            if(address==''){
+                $('#address').css('border-color','#ff0000');
+            }
+
+            if(mobile==''){
+                $('#mobile').css('border-color','#ff0000');
+            }
+                
+            for(var i=0;i<optradio.length;i++){
+                if(optradio[i].checked==true){
+                    genValue=true;
+                }
+            }  
+            if(!genValue){
+                $('#selectRadio').css({"border":"solid 1px red"});
+//                $('#genderSelect').html("Select gender");
+            }
+            
+            if(day==''){
+                $('#day').css('border-color','#ff0000');
+            }else{
+                $('#day').css('border-color','#00a534');
+            }
+                
+            if(month==''){
+                $('#month').css('border-color','#ff0000');
+            }else{
+                $('#month').css('border-color','#00a534');
+            }
+            if(year==''){
+                $('#year').css('border-color','#ff0000');
+            }else{
+                $('#year').css('border-color','#00a534');
+            }
+            if(image==''){
+                $('#image').css('border-color','#ff0000');
+            }else{
+                 $('#image').css('border-color','green');
+            }
+
+            if(password=='' || password.length<10){
+                $('#password1').css('border-color','#ff0000');
+            }
+                
+//            if(password!=confirmpassword)
+//            {
+//                $('#confirmpasswordWarning').text("Password doesn't match");
+//                $('#confirmpassword').css("color","red");
+//                $('#password1').css('box-shadow','0 0 10px red');
+//                $('#confirmpassword').css('box-shadow','0 0 10px red');
+//            }
+
+            if(confirmpassword==''){
+                $('#confirmpassword').css('border-color','#ff0000');
+            }
+     
+//            if(password!=confirmpassword){
+//                $('#confirmpasswordWarning').text("Password doesn't match");
+//                $('#confirmpassword').css("color","red");
+//                $('#password1').css('box-shadow','0 0 10px red');
+//                $('#confirmpassword').css('box-shadow','0 0 10px red');
+//            }
+            
+//            alert(optradio);
+            if(name!='' && email!='' && address!='' && mobile!='' && optradio!='' && day!=''&& month!='' && year!='' && image!='' && password!='')
+                {
+                    
+                    
+                    $.ajax({
+					type: "POST",
+					data:{
+						done:1,
+                        name:name,
+                        email : email,
+                        address : address,
+                        mobile : mobile,
+                        optradio : optradio,
+
+                        day : day,
+                        month : month,
+                        year : year,
+                        image : image,
+                        password :password,
+					},
+                    url: "userRegistration.php",
+                    cache: false,
+                    
+					success: function(responseText){
+                        if(responseText==1){
+                           $("#result").html("Registration complete !");
+                           $("#result").css({"color":"green","font-weight":"bold"});
+                            
+//                             $( "#dialog-message" ).dialog({
+//                                  modal: true,
+//                                 
+//                                  buttons: {
+//                                    Ok: function() {
+//                                      $( this ).dialog( "close" );
+//                                    }
+//                                  }
+//                                });
+                            
+                            
+                        }else {
+                            $("#result").html(responseText);
+                            $("#result").css({"color":"red","font-weight":'bold'});
+//                            alert(responseText);
+                            
+                        }
+//                        setTimeout(function(){
+//                            $('#result').fadeOut();
+////                            location.reload();
+////                             window.location = document.URL;
+//                            },1000);
+					}
+                 
+				});
+                    
+                
+                }
+                else
+                {
+                    
+                }
+                
+           
+//			}else{
+//				$("#result").text("Fill up each field !!");
+//				
+//			}
+                
+            
               
         });
       });
@@ -351,8 +542,8 @@ if(isset($_POST['login'])){
     
     $(function(){
           $('#login-form-link').click(function (e){
-                $('#login-form').delay(100).fadeIn(100);
-                $('#register-form').fadeOut(100);
+                $('#loginform').delay(100).fadeIn(100);
+                $('#registerform').fadeOut(100);
                 $('#register-form-link').removeClass('active');
                 $(this).addClass('active');
                 e.preventDefault();
@@ -360,8 +551,8 @@ if(isset($_POST['login'])){
             
             
             $('#register-form-link').click(function (e){
-                $('#register-form').delay(100).fadeIn(100);
-                $('#login-form').fadeOut(100);
+                $('#registerform').delay(100).fadeIn(100);
+                $('#loginform').fadeOut(100);
                 $('#login-form-link').removeClass('active');
                 $(this).addClass('active');
                 e.preventDefault();
