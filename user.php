@@ -58,8 +58,6 @@ class user{
             return false;
         }
         else{
-        
-        
         $sql="insert into userlogin(name,email,address,mobile,gender,dob,image,password) values(:name,:email,:address,:mobile,:gender,:dob,:image,:password)";
         $stmt=DB::myQuery($sql);
         $stmt->bindValue(':name',$this->name);
@@ -71,14 +69,12 @@ class user{
         $stmt->bindValue(':image',$this->image);
         $stmt->bindValue(':password',$this->password);
         $stmt->execute();
-        return true;
-            
+        return true;   
         }
         
     }
     
     
-   
     public function loginUser(){
         $sql="select * from userlogin where email=:email and password=:password";
         $stmt=DB::myQuery($sql);
@@ -95,6 +91,17 @@ class user{
         }
         return $result;
     }
+    
+    
+    
+    public function getUserInformation(){
+        $sql="select * from userlogin where email=:email limit 1";
+        $stmt=DB::myQuery($sql);
+        $stmt->bindValue(':email',Session::get('email'));
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+    
     
     
     

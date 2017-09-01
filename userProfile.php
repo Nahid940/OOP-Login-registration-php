@@ -1,4 +1,6 @@
 <?php
+include('user.php');
+$user=new user();
 include_once('Session.php');
 Session::init();
 Session::checksession();
@@ -25,6 +27,7 @@ if(isset($_GET['action']) && $_GET['action']=='logout')
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
+<!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
 
     <!-- Custom styles for this template -->
     
@@ -69,27 +72,74 @@ if(isset($_GET['action']) && $_GET['action']=='logout')
     <div class="container">
 
       <!-- Jumbotron Header -->
+<!--
       <header class="jumbotron my-4">
       
-        <h1 class="display-3">A Warm Welcome! <?php  echo $name;?>
-        </h1>
-      
-      
-<!--
+        <h1 class="display-3">A Warm Welcome! <?php  echo $name;?></h1>
         <p class="lead"></p>
         <a href="#" class="btn btn-primary btn-lg">Call to action!</a>
--->
       </header>
+-->
 
       <!-- Page Features -->
       <div class="row text-center">
-        <div class="col-lg-3 col-md-6 mb-4">
-          <div class="card">
-            <div class="card-footer">
-              <a href="manager.php" class="btn btn-primary">Manage your managers</a>
-            </div>
-          </div>
+                 <?php
+                foreach($user->getUserInformation() as $userData){             
+                ?>
+        <div class="col-lg-4">
+
         </div>
+        <div class="col-lg-8">      
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                  <h3 class="panel-title"><?php echo $userData['name']?></h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                    <div class="col-md-12 col-lg-12 " align="center">
+                    <table class="table table-user-information">
+                    <tbody>
+                     
+                      <tr>
+                        <td><img src="<?php echo $userData['image']?>" style="height:200px;width:200px" alt="Image"></td>
+                      </tr> 
+                        <tr>
+                        <td>Email:</td>
+                        <td><?php echo $userData['email']?></td>
+                      </tr>
+                      
+                       <tr>
+                        <td>Address:</td>
+                        <td><?php echo $userData['address']?></td>
+                      </tr>
+                      
+                       <tr>
+                        <td>Mobile:</td>
+                        <td><?php echo $userData['mobile']?></td>
+                      </tr> 
+                        <tr>
+                        <td>Gender:</td>
+                        <td><?php echo $userData['gender']?></td>
+                      </tr>
+                      
+                      <tr>
+                        <td>Date of Birth</td>
+                        <td><?php echo $userData['dob']?></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                       
+                        </div>
+                    </div>
+                </div>
+            </div>
+         </div>        
+               <?php }?> 
+              
+             
+                
+<!--            </div>-->
+<!--        </div>-->
 
 <!--
         <div class="col-lg-3 col-md-6 mb-4">
