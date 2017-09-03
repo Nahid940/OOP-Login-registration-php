@@ -70,8 +70,7 @@ class user{
         $stmt->bindValue(':password',$this->password);
         $stmt->execute();
         return true;   
-        }
-        
+        } 
     }
     
     
@@ -117,5 +116,21 @@ class user{
     }
     
     }
+    
+    
+    public function UpdateUser(){
+        $sql="select * from userlogin where email=:email";
+        $stmt=DB::myQuery($sql);
+        $stmt->bindValue(':email',$this->email);
+        $stmt->execute();
+        $result=$stmt->fetchAll();
+        if($result){
+            return $result;
+        }else{
+            return false;
+        }
+
+    }
+    
 }
 ?>

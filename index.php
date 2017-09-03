@@ -24,8 +24,8 @@ if(isset($_GET['action']) && $_GET['action']=='logout')
     <title>Heroic Features - Start Bootstrap Template</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-
+<!--    <link href="css/bootstrap.min.css" rel="stylesheet">-->
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <!-- Custom styles for this template -->
     
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
@@ -35,6 +35,7 @@ if(isset($_GET['action']) && $_GET['action']=='logout')
   <body>
 
     <!-- Navigation -->
+<!--
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div class="container">
         <a class="navbar-brand" href="#">Start Bootstrap</a>
@@ -64,9 +65,39 @@ if(isset($_GET['action']) && $_GET['action']=='logout')
         </div>
       </div>
     </nav>
+-->
 
     <!-- Page Content -->
-    <div class="container">
+    <div class="container-fluid">
+       <nav class="navbar navbar-default">
+<!--      <div class="container">-->
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Brand</a>
+        </div>
+    
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="index.php">Home</a></li>
+            <li> <a class="nav-link" href="userProfile.php"><i class="fa fa-fw fa-user"></i> Profile</a></li>
+            <li><a class="nav-link" href="?action=logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout <?php echo $name?></a></li>
+           
+          </ul>
+         
+        </div><!-- /.navbar-collapse -->
+<!--      </div>-->
+      <!-- /.container -->
+    </nav>
+      
+      
+      
 
       <!-- Jumbotron Header -->
       <header class="jumbotron my-4">

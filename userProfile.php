@@ -26,14 +26,14 @@ if(isset($_GET['action']) && $_GET['action']=='logout')
     <title>Heroic Features - Start Bootstrap Template</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+<!--    <link href="css/bootstrap.min.css" rel="stylesheet">-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
     <!-- Custom styles for this template -->
     
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
     <link href="css/heroic-features.css" rel="stylesheet">
-    <script src="vendor/jquery/jquery.min.js"></script>
+    
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     
   </head>
@@ -44,35 +44,32 @@ if(isset($_GET['action']) && $_GET['action']=='logout')
   
 
     <!-- Page Content -->
-    <div class="container">
-       <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-      <div class="container">
-        <a class="navbar-brand" href="#">Start Bootstrap</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="index.php">Home
-                <span class="sr-only">(current)</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">About</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Services</a>
-            </li>
-             <li class="nav-item">
-              <a class="nav-link" href="userProfile.php"><i class="fa fa-fw fa-user"></i> Profile</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="?action=logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout <?php echo $name?></a>
-            </li>
-          </ul>
+    <div class="container-fluid">
+      <nav class="navbar navbar-default">
+<!--      <div class="container">-->
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Brand</a>
         </div>
-      </div>
+    
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="index.php">Home</a></li>
+            <li> <a class="nav-link" href="userProfile.php"><i class="fa fa-fw fa-user"></i> Profile</a></li>
+            <li><a class="nav-link" href="?action=logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout <?php echo $name?></a></li>
+           
+          </ul>
+         
+        </div><!-- /.navbar-collapse -->
+<!--      </div>-->
+      <!-- /.container -->
     </nav>
      
      
@@ -123,9 +120,8 @@ if(isset($_GET['action']) && $_GET['action']=='logout')
                         <td><?php echo $userData['dob']?></td>
                         <td>
                         <form action="" method="post">
-<!--                             <input type="button" data-toggle="modal" data-target="#view-modal" class="btn btn-info editevent" value="Edit">-->
-                       <input type="button" data-toggle="modal" data-target="#view-modal" value="Update" name="edit"  class="btn btn-primary editevent" data-id="15" id="editevent" />
-                       
+                         <input type="hidden" value="<?php echo $userData['email']?>" id="userEmail" name="userEmail"/>
+                          <input type="button" data-toggle="modal" data-target="#view-modal" value="Update" name="edit"  class="btn btn-primary updateUser" id="updateUser" />
                        
                         </form>
                        </td>
@@ -146,23 +142,24 @@ if(isset($_GET['action']) && $_GET['action']=='logout')
       <!-- /.row -->
       
               <div id="view-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                 
                   <div class="modal-dialog"> 
                      <div class="modal-content"> 
                         <div class="modal-header"> 
                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> 
                            <h4 class="modal-title">
-                               <i class="fa fa-pencil" aria-hidden="true"></i> Event details
+                               <i class="fa fa-pencil" aria-hidden="true"></i> User details
                            </h4> 
                         </div> 
 
                         <div class="modal-body">                     
                            <div id="modal-loader" style="display: none; text-align: center;">
                            <!-- ajax loader -->
-                           <img src="ajax-loader.gif">
+<!--                           <img src="ajax-loader.gif">-->
                            </div>
 
                            <!-- mysql data will be load here -->                          
-<!--                           <div id="dynamic-content"></div>-->
+                           <div id="dynamic-content"></div>
                         </div> 
 
                         <div class="modal-footer"> 
@@ -193,6 +190,7 @@ if(isset($_GET['action']) && $_GET['action']=='logout')
     
 <!--    <script src="vendor/popper/popper.min.js"></script>-->
 <!--    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>-->
+  <script src="vendor/jquery/jquery.min.js"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     
    
@@ -200,31 +198,30 @@ if(isset($_GET['action']) && $_GET['action']=='logout')
     
        <script>
         $(document).ready(function() {
-        $(".editevent").on('click', function(e) {
-        // Get the record's ID via attribute
+        $(".updateUser").on('click', function(e) {
             e.preventDefault();
-            var id = $(this).attr('data-id');
+            //Get the value after button is clicked
+            var userEmail = jQuery(this).prevAll('input[name="userEmail"]').val();
             $('#dynamic-content').html('');
             $('#modal-loader').show();
             $('#modal-loader').hide();
-            alert("ok");
             
-//             $.ajax({
-//              url: 'editevent.php',
-//              type: 'POST',
-//              data: {
-//                  id:id,
-//              },
-//              dataType: 'html'
-//         }).done(function(data){
-//              console.log(data); 
-//              $('#dynamic-content').html(''); // blank before load.
-//              $('#dynamic-content').html(data); // load here
-//              $('#modal-loader').hide(); // hide loader  
-//         }).fail(function(){
-//          $('#dynamic-content').html('<i class="glyphicon glyphicon-info-sign"></i> Something went wrong, Please try again...');
-//          $('#modal-loader').hide();
-//     });
+             $.ajax({
+              url: 'EditUserProfile.php',
+              type: 'POST',
+              data: {
+                  userEmail:userEmail,
+              },
+              dataType: 'html'
+         }).done(function(data){
+              console.log(data); 
+              $('#dynamic-content').html(''); // blank before load.
+              $('#dynamic-content').html(data); // load here
+              $('#modal-loader').hide(); // hide loader  
+         }).fail(function(){
+          $('#dynamic-content').html('<i class="glyphicon glyphicon-info-sign"></i> Something went wrong, Please try again...');
+          $('#modal-loader').hide();
+     });
             
         });
     });
